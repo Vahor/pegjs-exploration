@@ -23,6 +23,8 @@ value_separator = _ "," _
 name_separator  = _ ":" _
 new_branch = _ "->" _
 
+number = [0-9]+
+
 string = chars:char+ {
 		return chars.join("");
 }
@@ -47,9 +49,12 @@ start
     }
 
 Content
-  = companies:Companies fields:(ResultFields)? {
+  = companies:Companies 
+  select:(Select)?
+  fields:(ResultFields)? {
       return {
         companies: companies,
+		select: select ?? [],
 		fields: fields ?? []
       };
     }
@@ -99,4 +104,26 @@ ResultFields = new_branch _ "fields" _ array_start fields:(
 	return fields ?? [];
 }
 
-ResultAllowedFields = "title" / "text" / "score"
+ResultAllowedFields = "title" / "text" / "score" / "positive" / "negative"
+
+Select = new_branch _ "select" object_start select:SelectBody+ object_end {
+		return select;
+}
+
+SelectBody 
+		= _ value:(
+		SelectMethod
+		) _  {
+			return value;
+		}
+
+OrderBy = "ASC" / "DESC"
+SelectTop = "top" "(" _ count:number _ ")" _ "by" _ field:ResultAllowedFields order:("." @OrderBy)? {
+  return {
+    method: "top",
+    count: count,
+	field: field,
+	order: order ?? "ASC"
+  };
+}
+SelectMethod = SelectTop

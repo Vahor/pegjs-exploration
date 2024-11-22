@@ -12,7 +12,7 @@ companies {
 		keywords: [solar, renewable]
 	}
 }
--> articles {
+-> select {
 	top(3) by sentiment.highest,
 	top(3) by sentiment.lowest
 } 
