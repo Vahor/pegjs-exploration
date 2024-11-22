@@ -23,7 +23,9 @@ value_separator = _ "," _
 name_separator  = _ ":" _
 new_branch = _ "->" _
 
-number = [0-9]+
+number = [0-9]+ {
+		return parseInt(text(), 10);
+}
 
 string = chars:char+ {
 		return chars.join("");
