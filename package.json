@@ -1,0 +1,15 @@
+{
+	"name": "pegjs-exploration",
+	"module": "index.ts",
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"peggy": "^4.2.0"
+	}
+}
+

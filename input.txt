@@ -1,0 +1,11 @@
+  companies {
+    "TechCorp" {
+      keywords: ["cloud", "saas", "enterprise"]
+      context: "Cloud computing"
+    }
+    "GreenEnergy" {
+      context: "Solar panel manufacturing"
+      keywords: ["solar", "renewable"]
+    }
+  }
+
