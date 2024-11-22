@@ -1,4 +1,8 @@
   companies {
+    "EmptyCompany" {
+      keywords: []
+      context: "It's empty"
+    }
     "TechCorp" {
       keywords: ["cloud", "saas", "enterprise"]
       context: "Cloud computing"
@@ -8,4 +12,4 @@
       keywords: ["solar", "renewable"]
     }
   }
-
+-> fields [title, score]

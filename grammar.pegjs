@@ -21,6 +21,7 @@ array_start = _ "[" _
 array_end = _ "]" _
 value_separator = _ "," _
 name_separator  = _ ":" _
+new_branch = _ "->" _
 
 string = chars:char+ {
 		return chars.join("");
@@ -46,9 +47,10 @@ start
     }
 
 Content
-  = companies:Companies any {
+  = companies:Companies fields:(ResultFields)? {
       return {
-        companies: companies
+        companies: companies,
+		fields: fields ?? []
       };
     }
 
@@ -80,7 +82,7 @@ CompanyContext = "context" name_separator value:quoted_string {
 }
 
 CompanyKeywords = "keywords" name_separator array_start values:(
-      head:value
+      head:quoted_string
       tail:(value_separator @quoted_string)*
       { return [head].concat(tail); }
     )? array_end {	
@@ -88,3 +90,13 @@ CompanyKeywords = "keywords" name_separator array_start values:(
 		keywords: values ?? []
 	}
 }
+
+ResultFields = new_branch _ "fields" _ array_start fields:(
+    head:ResultAllowedFields
+    tail:(value_separator @ResultAllowedFields)*
+    { return [head].concat(tail); }
+  )? array_end {
+	return fields ?? [];
+}
+
+ResultAllowedFields = "title" / "text" / "score"
