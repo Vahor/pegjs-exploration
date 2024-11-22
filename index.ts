@@ -1,4 +1,4 @@
-import { parse } from './grammar.js';
+import { parse } from './grammar';
 
 try {
 	const input = `
